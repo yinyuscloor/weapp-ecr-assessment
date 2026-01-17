@@ -1,0 +1,10 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="400" height="300" fill="#F8F4E9"/>
+<rect x="50" y="50" width="300" height="200" rx="12" fill="#EFEADB" stroke="#A1887F" stroke-width="2"/>
+<circle cx="200" cy="100" r="30" fill="#A1887F"/>
+<path d="M150 160L250 160" stroke="#A1887F" stroke-width="3" stroke-linecap="round"/>
+<path d="M150 180L220 180" stroke="#A1887F" stroke-width="3" stroke-linecap="round"/>
+<path d="M150 200L280 200" stroke="#A1887F" stroke-width="3" stroke-linecap="round"/>
+<text x="200" y="260" text-anchor="middle" fill="#3E2723" font-family="Arial, sans-serif" font-size="20" font-weight="bold">ECR依恋测试</text>
+<text x="200" y="285" text-anchor="middle" fill="#5D4037" font-family="Arial, sans-serif" font-size="16">了解你的依恋风格</text>
+</svg>

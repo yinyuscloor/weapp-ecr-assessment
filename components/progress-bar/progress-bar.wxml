@@ -1,0 +1,11 @@
+<!-- 进度条组件 -->
+<view class="progress-bar">
+  <view class="progress-info">
+    <text class="progress-number">{{current}}/{{total}}</text>
+    <text class="progress-percentage">{{percentage}}%</text>
+  </view>
+  <view class="progress-bar-container">
+    <view class="progress-bar-fill" style="width: {{percentage}}%;"></view>
+  </view>
+  <text wx:if="{{label}}" class="progress-label">{{label}}</text>
+</view>

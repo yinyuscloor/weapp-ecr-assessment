@@ -1,0 +1,56 @@
+/* 选项按钮组件样式 */
+
+.option-item {
+  height: 56px;
+  background-color: var(--color-bg-tertiary);
+  border: 2px solid var(--color-border-medium);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-3);
+  transition: all 0.2s ease;
+}
+
+.option-item.selected {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.option-item.selected .option-value,
+.option-item.selected .option-label {
+  color: var(--color-bg-primary);
+}
+
+.option-value {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  min-width: 24px;
+  text-align: center;
+}
+
+.option-label {
+  flex: 1;
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  text-align: center;
+  padding: 0 var(--space-2);
+}
+
+.option-check {
+  width: 20px;
+  height: 20px;
+  color: var(--color-primary);
+}
+
+.option-item.selected .option-check {
+  color: var(--color-bg-primary);
+}
+
+/* 响应式调整 */
+@media screen and (min-width: 480px) {
+  .option-item {
+    height: 60px;
+  }
+}

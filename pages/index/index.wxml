@@ -1,0 +1,43 @@
+<!-- 首页 - 极致简约设计 -->
+<view class="page-container bg-primary">
+
+  <!-- 背景图片 -->
+  <image
+    src="/assets/images/background.png"
+    class="page-background"
+    mode="aspectFill"
+  />
+
+  <!-- Logo和标题 -->
+  <image class=".title-image" src="/assets/images/title.png" mode="aspectFit" />
+
+  <!-- 简短介绍 -->
+  <view class="description-section slide-up">
+    <view class="description-line">
+      <text class="description-text">· 基于《亲密关系体验量表》分析依恋风格</text>
+    </view>
+    <view class="description-line">
+      <text class="description-text">· 数据仅在本地处理，完全隐私保护</text>
+    </view>
+    <view class="description-line">
+      <text class="description-text">· 36道科学题目，约 6-8 分钟</text>
+    </view>
+  </view>
+
+  <!-- 小猫图片  -->
+  <image class="cat-image" src="/assets/images/xiaoba1.png" mode="aspectFit" />
+
+  <!-- 开始测试按钮 -->
+  <view class="action-section">
+    <button class="start-button" bindtap="startTest">
+      <image src="/assets/icons/play-circle.svg" class="start-button-icon" mode="aspectFit" />
+      <text>开始测试</text>
+    </button>
+
+    <button class="results-button" bindtap="goToResults">
+      <image src="/assets/icons/result-outline.svg" class="results-button-icon" mode="aspectFit" />
+      <text>我的结果</text>
+    </button>
+  </view>
+
+</view>

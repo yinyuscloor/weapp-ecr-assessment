@@ -1,0 +1,9 @@
+<!-- 题目卡片组件 -->
+<view class="question-card {{animationClass}}">
+  <view class="question-header">
+    <text class="question-number">{{questionNumber}}</text>
+    <text class="question-dimension">{{questionDimension}}</text>
+  </view>
+  <text class="question-text">{{questionText}}</text>
+  <text class="question-hint">请根据您的真实感受选择最符合的选项</text>
+</view>

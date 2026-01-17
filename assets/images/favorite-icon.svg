@@ -1,0 +1,5 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="100" cy="100" r="80" fill="#F8F4E9" stroke="#A1887F" stroke-width="4"/>
+<path d="M100 130L120 150L115 125L135 110L110 110L100 85L90 110L65 110L85 125L80 150L100 130Z" fill="#A1887F"/>
+<text x="100" y="185" text-anchor="middle" fill="#3E2723" font-family="Arial, sans-serif" font-size="18" font-weight="bold">ECR测试</text>
+</svg>

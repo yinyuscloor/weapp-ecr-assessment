@@ -1,0 +1,15 @@
+<!-- 选项按钮组件 -->
+<view
+  class="option-item {{isSelected ? 'selected' : ''}}"
+  bindtap="onSelect"
+  data-value="{{value}}"
+>
+  <text class="option-value">{{value}}</text>
+  <text class="option-label">{{label}}</text>
+  <image
+    wx:if="{{isSelected}}"
+    src="/assets/icons/check.svg"
+    class="option-check"
+    mode="aspectFit"
+  />
+</view>

@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/test/test",
+    "pages/result/result"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarTitleText": "ECR依恋测试",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": false,
+    "onReachBottomDistance": 50
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "usingComponents": {},
+  "permission": {},
+  "requiredPrivateInfos": [],
+  "plugins": {},
+
+  "functionalPages": false,
+  "resizable": false,
+  "rendererOptions": {
+    "skyline": {
+      "defaultDisplayBlock": false,
+      "disableABTest": true,
+      "sdkVersionBegin": "3.0.0",
+      "sdkVersionEnd": "15.255.255"
+    }
+  },
+  "entryPagePath": "pages/index/index",
+  "debug": true
+}

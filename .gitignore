@@ -1,0 +1,67 @@
+# 微信小程序通用忽略文件
+
+# 依赖目录
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# 编辑器目录
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# 日志文件
+logs/
+*.log
+
+# 运行时数据
+*.pid
+*.seed
+*.pid.lock
+
+# 编译输出目录
+dist/
+build/
+miniprogram_npm/
+
+# 配置文件
+project.private.config.json
+
+# 临时文件
+temp/
+tmp/
+
+# 测试相关
+coverage/
+.nyc_output
+
+# 文档
+*.md
+!README.md
+
+# 其他
+*.mp
+*.map
+*.tgz
+
+# 微信开发者工具生成文件
+unpackage/
+
+# 自定义忽略
+*.min.js
+*.min.css
+
+# 敏感信息
+*.env
+*.key
+*.pem
+*.crt

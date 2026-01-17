@@ -1,0 +1,206 @@
+<!-- 结果页 - 清晰信息展示 -->
+<view class="result-page bg-primary">
+
+  <!-- 背景图片 -->
+  <image
+    src="/assets/images/background.png"
+    class="page-background"
+    mode="aspectFill"
+  />
+
+  <!-- 加载状态 -->
+  <view wx:if="{{isLoading}}" class="loading-container">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">正在生成您的分析报告...</text>
+  </view>
+
+  <!-- 错误状态 -->
+  <view wx:elif="{{hasError}}" class="error-container">
+    <image src="/assets/icons/alert-circle.svg" class="error-icon" mode="aspectFit" />
+    <text class="error-title">加载结果失败</text>
+    <text class="error-message">{{errorMessage}}</text>
+    <button class="action-button action-button-primary" bindtap="retryLoading">
+      <image src="/assets/icons/refresh.svg" class="action-button-icon" mode="aspectFit" />
+      <text>重试</text>
+    </button>
+  </view>
+
+  <!-- 主要内容 - 测试结果 -->
+  <view wx:else class="result-content fade-in-up">
+
+    <!-- 顶部结果卡片 -->
+    <view class="result-header">
+      <view class="result-card scale-in">
+        <view class="result-title-container">
+          <text class="result-title">{{resultSummary.title}}</text>
+          <view class="result-badge" style="background-color: {{resultSummary.bgColor}}; color: {{resultSummary.textColor}};">
+            {{resultSummary.label}}
+          </view>
+        </view>
+        <text class="result-subtitle">{{resultSummary.subtitle}}</text>
+        <text class="description-text">{{resultSummary.summary}}</text>
+      </view>
+
+      <!-- 分数展示 -->
+      <view class="score-section">
+        <text class="score-title">维度分数分析</text>
+        <view class="score-cards">
+          <view class="score-card">
+            <text class="score-label">焦虑维度</text>
+            <text class="score-value">{{scores.anxiety.raw}}</text>
+            <text class="score-interpretation">{{scores.anxiety.interpretation}}</text>
+          </view>
+          <view class="score-card">
+            <text class="score-label">回避维度</text>
+            <text class="score-value">{{scores.avoidance.raw}}</text>
+            <text class="score-interpretation">{{scores.avoidance.interpretation}}</text>
+          </view>
+        </view>
+
+        <!-- 分数解释 -->
+        <view class="score-explanation">
+          <text class="explanation-title">分数说明</text>
+          <text class="explanation-text">
+            分数范围：1.0-7.0，4.0为分界点。\n
+            焦虑维度：反映对被抛弃或拒绝的担心程度。\n
+            回避维度：反映对情感亲密的舒适程度。
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 详细分析区域 -->
+    <view class="detail-section">
+
+      <!-- 关键特征 -->
+      <view class="collapsible-section">
+        <view class="collapsible-header" bindtap="toggleCharacteristics">
+          <text class="collapsible-title">关键特征</text>
+          <image
+            src="/assets/icons/chevron-down.svg"
+            class="collapsible-icon {{showCharacteristics ? 'expanded' : ''}}"
+            mode="aspectFit"
+          />
+        </view>
+        <view wx:if="{{showCharacteristics}}" class="collapsible-content">
+          <view class="characteristics-list">
+            <view wx:for="{{characteristics}}" wx:key="index" class="characteristic-item">
+              <image src="/assets/icons/check-circle.svg" class="characteristic-icon" mode="aspectFit" />
+              <text class="characteristic-text">{{item}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 成长建议 -->
+      <view class="collapsible-section">
+        <view class="collapsible-header" bindtap="toggleSuggestions">
+          <text class="collapsible-title">成长建议</text>
+          <image
+            src="/assets/icons/chevron-down.svg"
+            class="collapsible-icon {{showSuggestions ? 'expanded' : ''}}"
+            mode="aspectFit"
+          />
+        </view>
+        <view wx:if="{{showSuggestions}}" class="collapsible-content">
+          <view class="suggestions-list">
+            <view wx:for="{{growthSuggestions}}" wx:key="index" class="suggestion-card">
+              <text class="suggestion-title">建议 {{index + 1}}</text>
+              <text class="suggestion-text">{{item}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 关系模式 -->
+      <view class="collapsible-section">
+        <view class="collapsible-header" bindtap="togglePatterns">
+          <text class="collapsible-title">关系模式</text>
+          <image
+            src="/assets/icons/chevron-down.svg"
+            class="collapsible-icon {{showPatterns ? 'expanded' : ''}}"
+            mode="aspectFit"
+          />
+        </view>
+        <view wx:if="{{showPatterns}}" class="collapsible-content">
+          <view class="characteristics-list">
+            <view wx:for="{{relationshipPatterns}}" wx:key="index" class="characteristic-item">
+              <image src="/assets/icons/trending-up.svg" class="characteristic-icon" mode="aspectFit" />
+              <text class="characteristic-text">{{item}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 兼容性说明 -->
+      <view class="collapsible-section">
+        <view class="collapsible-header" bindtap="toggleCompatibility">
+          <text class="collapsible-title">兼容性说明</text>
+          <image
+            src="/assets/icons/chevron-down.svg"
+            class="collapsible-icon {{showCompatibility ? 'expanded' : ''}}"
+            mode="aspectFit"
+          />
+        </view>
+        <view wx:if="{{showCompatibility}}" class="collapsible-content">
+          <view class="suggestions-list">
+            <view wx:for="{{compatibilityNotes}}" wx:key="index" class="suggestion-card">
+              <text class="suggestion-text">{{item}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 图表占位 -->
+      <view class="chart-container">
+        <text class="chart-title">依恋维度分布</text>
+        <view class="chart-placeholder">
+          <text>可视化图表（开发中）</text>
+        </view>
+        <text class="explanation-text">
+          您的依恋风格位于坐标({{scores.anxiety.raw}}, {{scores.avoidance.raw}})处，
+          {{attachmentStyle === 'secure' ? '处于安全区域' : '建议向安全区域发展'}}。
+        </text>
+      </view>
+
+    </view>
+
+    <!-- 底部操作区域 -->
+    <view class="action-section">
+      <view class="action-buttons">
+        <button class="action-button action-button-primary" bindtap="retakeTest">
+          <image src="/assets/icons/refresh-cw.svg" class="action-button-icon" mode="aspectFit" />
+          <text>重新测试</text>
+        </button>
+        <button class="action-button action-button-secondary" bindtap="shareResult">
+          <image src="/assets/icons/share.svg" class="action-button-icon" mode="aspectFit" />
+          <text>分享结果</text>
+        </button>
+      </view>
+
+      <!-- 分享区域 -->
+      <view class="share-section">
+        <text class="share-title">分享给朋友</text>
+        <view class="share-buttons">
+          <button class="share-button" open-type="share">
+            <image src="/assets/icons/message-circle.svg" class="share-icon" mode="aspectFit" />
+          </button>
+          <button class="share-button" bindtap="saveResultImage">
+            <image src="/assets/icons/download.svg" class="share-icon" mode="aspectFit" />
+          </button>
+          <button class="share-button" bindtap="copyResultLink">
+            <image src="/assets/icons/link.svg" class="share-icon" mode="aspectFit" />
+          </button>
+        </view>
+      </view>
+
+      <!-- 底部说明 -->
+      <view class="footer">
+        <text class="footer-text">© 2025 ECR依恋测试 | 基于ECR-R国际标准</text>
+        <text class="footer-text">测试结果仅供参考，不构成专业诊断</text>
+      </view>
+    </view>
+
+  </view>
+
+</view>
