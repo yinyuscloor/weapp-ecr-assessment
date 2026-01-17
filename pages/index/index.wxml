@@ -30,12 +30,12 @@
   <!-- 开始测试按钮 -->
   <view class="action-section">
     <button class="start-button" bindtap="startTest">
-      <image src="/assets/icons/play-circle.svg" class="start-button-icon" mode="aspectFit" />
+      <image src="/assets/icons/arrow-right.svg" class="start-button-icon" mode="aspectFit" />
       <text>开始测试</text>
     </button>
 
     <button class="results-button" bindtap="goToResults">
-      <image src="/assets/icons/result-outline.svg" class="results-button-icon" mode="aspectFit" />
+      <image src="/assets/icons/check.svg" class="results-button-icon" mode="aspectFit" />
       <text>我的结果</text>
     </button>
   </view>
