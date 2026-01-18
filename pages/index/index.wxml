@@ -14,7 +14,7 @@
   <!-- 简短介绍 -->
   <view class="description-section slide-up">
     <view class="description-line">
-      <text class="description-text">· 基于《亲密关系体验量表》分析依恋风格</text>
+      <text class="description-text">· 基于《亲密关系体验量表》评测依恋风格</text>
     </view>
     <view class="description-line">
       <text class="description-text">· 数据仅在本地处理，完全隐私保护</text>
@@ -39,5 +39,29 @@
       <text>我的结果</text>
     </button>
   </view>
+
+  <!-- 测试说明弹窗 -->
+  <popup-window
+    id="testModal"
+    show="{{showTestModal}}"
+    title="测试说明"
+    content="请根据您的真实感受选择答案，本测试通过一系列选择题评估你的依恋风格，所有分析仅供自我了解与成长参考，不用于专业诊断。"
+    confirmText="确认"
+    cancelText="返回"
+    bind:confirm="onModalConfirm"
+    bind:cancel="onModalCancel"
+  />
+
+  <!-- 继续测试弹窗 -->
+  <popup-window
+    id="continueTestModal"
+    show="{{showContinueTestModal}}"
+    title="进行中"
+    content="{{'您有进行中的测试（已完成 ' + continueTestProgress + '%），是否继续？'}}"
+    confirmText="继续测试"
+    cancelText="重新开始"
+    bind:confirm="onContinueTestConfirm"
+    bind:cancel="onContinueTestCancel"
+  />
 
 </view>

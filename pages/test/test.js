@@ -28,6 +28,7 @@ Page({
 
     // 进度信息
     progress: 0,
+    indicatorPosition: 0,
 
     // 7点量表选项
     scaleOptions: [],
@@ -46,13 +47,19 @@ Page({
   onLoad(options) {
     console.log('测试页加载', options);
 
+    // 检查是否有传递的起始题目索引
+    if (options.startIndex !== undefined) {
+      const startIndex = parseInt(options.startIndex);
+      if (!isNaN(startIndex) && startIndex >= 0 && startIndex < 36) {
+        console.log('设置起始题目索引:', startIndex);
+        this.setData({
+          currentQuestionIndex: startIndex
+        });
+      }
+    }
+
     // 初始化测试
     this.initTest();
-
-    // 检查是否有传递的参数
-    if (options.continue) {
-      console.log('继续现有测试');
-    }
   },
 
   // 页面显示
@@ -149,11 +156,18 @@ Page({
     // 检查是否为最后一题
     const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
+    // 计算指示器位置
+    const totalQuestions = questions.length;
+    const indicatorPosition = totalQuestions > 1
+      ? (currentQuestionIndex / (totalQuestions - 1)) * 100
+      : 0;
+
     this.setData({
       currentQuestion: currentQuestion,
       selectedOption: selectedOption,
       isLastQuestion: isLastQuestion,
-      animationClass: 'fade-in'
+      animationClass: 'fade-in',
+      indicatorPosition: indicatorPosition
     });
 
     console.log(`加载第${currentQuestionIndex + 1}题:`, currentQuestion.text);
@@ -210,13 +224,13 @@ Page({
 
     console.log(`问题 ${questionId} 选择答案:`, value);
 
-    // 延迟后自动跳转到下一题或完成测试
+    // 延迟后根据题目位置决定下一步操作
     setTimeout(() => {
       if (isLastQuestion) {
-        // 如果是最后一题，自动完成测试
-        this.completeTest();
+        // 最后一题：等待用户手动点击完成测试
+        console.log(`问题 ${questionId} 已回答，等待用户点击完成测试`);
       } else {
-        // 否则跳转到下一题
+        // 非最后一题：自动跳转到下一题
         this.goToNext();
       }
     }, 300); // 300毫秒延迟，让用户看到选中效果
@@ -325,14 +339,14 @@ Page({
 
     // 检查是否所有题目都已回答
     const unanswered = responses.filter(r => r === null || r === undefined).length;
+
     if (unanswered > 0) {
-      this.showConfirm(
-        '还有未完成的题目',
-        `您还有${unanswered}道题目未回答，确定要完成测试吗？`,
-        () => this.finalizeTest(),
-        () => console.log('用户取消完成测试')
-      );
+      // 有未回答的题目，直接完成测试
+      console.log(`有${unanswered}道题目未回答，直接完成测试`);
+      this.finalizeTest();
     } else {
+      // 所有题目都已回答，直接完成测试
+      console.log('所有题目已回答，完成测试');
       this.finalizeTest();
     }
   },

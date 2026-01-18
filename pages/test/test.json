@@ -1,9 +1,9 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "ECR测试",
-  "navigationBarBackgroundColor": "#F8F4E9",
+  "navigationBarTitleText": "ECR依恋测试",
+  "navigationBarBackgroundColor": "#f6fdfd",
+  "backgroundColor": "#f6fdfd",
   "navigationBarTextStyle": "black",
-  "backgroundColor": "#F8F4E9",
   "backgroundTextStyle": "light",
   "enablePullDownRefresh": false,
   "disableScroll": true,

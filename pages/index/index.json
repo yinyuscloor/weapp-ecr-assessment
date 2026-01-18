@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "popup-window": "/components/popup-window/popup-window"
+  },
   "navigationBarTitleText": "ECR依恋测试",
   "navigationBarBackgroundColor": "#f6fdfd",
   "backgroundColor": "#f6fdfd",

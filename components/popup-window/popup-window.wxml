@@ -1,0 +1,47 @@
+<!-- 自定义模态框组件 -->
+<view wx:if="{{visible}}">
+  <!-- 遮罩层（包含弹窗容器，实现居中） -->
+  <view
+    wx:if="{{showOverlay}}"
+    class="modal-overlay {{animateIn ? 'modal-overlay-show' : 'modal-overlay-hide'}}"
+    bindtap="onOverlayTap"
+    catchtap="catchTap"
+  >
+    <!-- 模态框内容（在遮罩层内部，通过flex居中） -->
+    <view class="modal-container {{animateIn ? 'modal-show' : 'modal-hide'}}" catchtap="catchTap">
+      <view class="modal-content">
+        <!-- 标题 -->
+        <view wx:if="{{title}}" class="modal-header">
+          <text class="modal-title">{{title}}</text>
+        </view>
+
+        <!-- 内容 -->
+        <view wx:if="{{content}}" class="modal-body">
+          <text class="modal-text">{{content}}</text>
+        </view>
+
+        <!-- 按钮区域 -->
+        <view class="modal-footer">
+          <!-- 取消按钮 -->
+          <button
+            wx:if="{{showCancel}}"
+            class="modal-btn modal-cancel-btn"
+            style="color: {{cancelColor}}"
+            bindtap="onCancel"
+          >
+            {{cancelText}}
+          </button>
+
+          <!-- 确认按钮 -->
+          <button
+            class="modal-btn modal-confirm-btn"
+            style="color: {{confirmColor}}"
+            bindtap="onConfirm"
+          >
+            {{confirmText}}
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

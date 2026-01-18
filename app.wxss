@@ -34,6 +34,11 @@
   --color-border-light: #e5e0db;    /* 浅边框 */
   --color-border-medium: #d5cfc8;   /* 中边框 */
   --color-border-dark: #c5beb5;     /* 深边框 */
+
+  /* 进度条变量 */
+  --progress-bar-height: 3px;          /* 默认高度 */
+  --progress-bar-height-thick: 6px;    /* 粗版本 */
+  --progress-bar-height-thin: 2px;     /* 细版本 */
 }
 
 /* ============================================

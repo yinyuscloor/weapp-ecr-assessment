@@ -232,6 +232,26 @@ App({
     return progress;
   },
 
+  // 获取下一个未回答题目的索引（在ORDERED_QUESTIONS中的位置）
+  getNextQuestionIndex() {
+    if (!this.globalData.currentAssessment) {
+      return 0; // 没有测试，从第一题开始
+    }
+
+    const assessment = this.globalData.currentAssessment;
+    const responses = assessment.responses;
+
+    // 找到第一个未回答的题目（null值）
+    for (let i = 0; i < responses.length; i++) {
+      if (responses[i] === null || responses[i] === undefined) {
+        return i; // 返回在ORDERED_QUESTIONS中的索引
+      }
+    }
+
+    // 如果所有题目都已回答，返回最后一个题目的索引
+    return responses.length - 1;
+  },
+
   // 分享到聊天
   onShareAppMessage(options) {
     return {

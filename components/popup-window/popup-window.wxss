@@ -1,0 +1,207 @@
+/* ===== 1. 遮罩层优化 ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35); /* 加深遮罩，确保覆盖效果 */
+  z-index: 9999;
+  transition: opacity 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); /* 弹性曲线 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40rpx; /* 添加内边距防止边缘挤压 */
+}
+
+.modal-overlay-show {
+  opacity: 1;
+  backdrop-filter: blur(0.05rpx); /* 轻微毛玻璃效果 */
+}
+
+.modal-overlay-hide {
+  opacity: 0;
+  backdrop-filter: blur(0);
+}
+
+/* ===== 2. 弹窗容器优化 ===== */
+.modal-container {
+  position: relative; /* 相对定位，作为flex子项 */
+  z-index: 10000;
+  transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); /* 弹性动画 */
+  /* 移除width: 100%和flex属性，由父容器控制居中 */
+}
+
+.modal-show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.modal-hide {
+  opacity: 0;
+  transform: translateY(30rpx) scale(0.95); /* 缩小消失更自然 */
+}
+
+/* ===== 3. 弹窗内容优化 ===== */
+.modal-content {
+  width: 72vw !important;
+  max-width: 680rpx;
+  min-width: 300rpx;
+  background: linear-gradient(145deg, #ffffff, #fafafa); /* 微妙渐变 */
+  border-radius: 24rpx; /* 增加圆角 */
+  overflow: hidden;
+  box-shadow: 0 20rpx 80rpx rgba(0, 0, 0, 0.15), 
+              0 8rpx 32rpx rgba(0, 0, 0, 0.08); /* 双层阴影更立体 */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* 白色边框增强质感 */
+}
+
+/* ===== 4. 标题区域 - 左对齐 ===== */
+.modal-header {
+  border-bottom: 1rpx solid rgba(240, 240, 240, 0.8); /* 更细的分割线 */
+  position: relative;
+}
+
+.modal-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #120012;
+  line-height: 1.2;
+  display: block;
+  text-align: center;
+}
+
+/* ===== 5. 正文区域 - 重点左对齐 ===== */
+.modal-body {
+  padding: 40rpx 48rpx 32rpx; 
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+.modal-text {
+  font-size: 28rpx !important;
+  color: var(--color-text-secondary, #4d4d4d);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  display: block;
+  text-align: justify;
+}
+
+/* ===== 7. 按钮区域优化 ===== */
+.modal-footer {
+  display: flex;
+  border-top: 1px solid var(--color-border-light, #f0f0f0);
+  margin-top: 4rpx;
+}
+
+.modal-btn {
+  flex: 1;
+  height: 85rpx !important;
+  text-align: center;
+  font-size: 30rpx !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 取消按钮优化 */
+.modal-cancel-btn {
+  border-right: 1px solid #f0f0f0;
+  border-radius: 1%;
+  background: linear-gradient(-90deg, transparent, rgba(107, 137, 165, 0.05));
+}
+
+.modal-cancel-btn:active {
+  background: linear-gradient(-90deg, transparent, rgba(24, 144, 255, 0.1));
+  color: var(--color-primary-dark, #0d6b86) !important;
+}
+
+/* 确认按钮优化 */
+.modal-confirm-btn {
+  background: linear-gradient(90deg, transparent, rgba(107, 137, 165, 0.05));
+}
+
+.modal-confirm-btn:active {
+  background: linear-gradient(90deg, transparent, rgba(24, 144, 255, 0.1));
+  color: var(--color-primary-dark, #0d6b86) !important;
+}
+
+/* ===== 8. 响应式优化 ===== */
+@media screen and (max-width: 480px) {
+  .modal-overlay {
+    padding: 32rpx;
+  }
+  
+  .modal-content {
+    width: 92vw;
+    max-width: 560rpx;
+    border-radius: 20rpx;
+  }
+  
+  .modal-header {
+    padding: 40rpx 40rpx 20rpx;
+  }
+  
+  .modal-body {
+    padding: 32rpx 40rpx 24rpx;
+    max-height: 60vh;
+  }
+  
+  .modal-text {
+    font-size: 30rpx;
+    line-height: 1.7;
+  }
+  
+  .modal-slot {
+    padding: 24rpx 40rpx;
+  }
+  
+  .modal-btn {
+    height: 96rpx;
+    line-height: 96rpx;
+    font-size: 32rpx;
+  }
+}
+
+/* ===== 9. 平板适配 ===== */
+@media screen and (min-width: 768px) {
+  .modal-content {
+    width: 70vw;
+    max-width: 720rpx;
+  }
+  
+  .modal-body {
+    max-height: 70vh;
+  }
+}
+
+/* ===== 10. 深色模式适配示例 ===== */
+@media (prefers-color-scheme: dark) {
+  .modal-content {
+    background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  .modal-title {
+    color: #ffffff;
+  }
+  
+  .modal-text {
+    color: #cccccc;
+  }
+  
+  .modal-footer {
+    border-top-color: rgba(255, 255, 255, 0.08);
+    background: rgba(40, 40, 40, 0.7);
+  }
+  
+  .modal-cancel-btn {
+    border-right-color: rgba(255, 255, 255, 0.08);
+    color: #999999;
+    background: rgba(60, 60, 60, 0.5);
+  }
+  
+  .modal-confirm-btn {
+    color: #4da6ff;
+    background: linear-gradient(90deg, transparent, rgba(77, 166, 255, 0.05));
+  }
+}

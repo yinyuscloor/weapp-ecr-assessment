@@ -14,7 +14,15 @@ Page({
     hasUserInfo: false,
 
     // 动画状态
-    animationClass: 'fade-in'
+    animationClass: 'fade-in',
+
+    // 模态框状态
+    showTestModal: false,
+    showContinueTestModal: false,
+
+    // 当前测试信息（用于继续测试弹窗）
+    currentAssessment: null,
+    continueTestProgress: 0
   },
 
   // 页面加载
@@ -123,20 +131,11 @@ Page({
     const answeredCount = assessment.responses.filter(r => r !== null).length;
     const progress = Math.round((answeredCount / 36) * 100);
 
-    wx.showModal({
-      title: '继续测试',
-      content: `您有进行中的测试（已完成 ${progress}%），是否继续？`,
-      confirmText: '继续测试',
-      cancelText: '重新开始',
-      success: (res) => {
-        if (res.confirm) {
-          // 继续测试
-          this.continueTest();
-        } else {
-          // 重新开始
-          this.startNewTest();
-        }
-      }
+    // 保存当前测试信息并显示弹窗
+    this.setData({
+      currentAssessment: assessment,
+      continueTestProgress: progress,
+      showContinueTestModal: true
     });
   },
 
@@ -158,36 +157,72 @@ Page({
       return;
     }
 
-    // 显示测试说明确认
-    wx.showModal({
-      title: '测试说明',
-      content: '测试包含36道题目，大约需要10-15分钟。请根据您的真实感受选择答案。所有数据仅在本地处理，绝不外传。',
-      confirmText: '开始测试',
-      cancelText: '取消',
-      success: (res) => {
-        if (res.confirm) {
-          // 用户确认开始测试
-          this.startNewTest();
-        } else {
-          console.log('用户取消开始测试');
-        }
-      }
+    // 显示自定义模态框（弹窗）
+    this.setData({
+      showTestModal: true
     });
+  },
+
+  // 模态框确认事件
+  onModalConfirm() {
+    console.log('用户确认开始测试');
+    // 关闭模态框
+    this.setData({ showTestModal: false });
+    // 开始新测试
+    this.startNewTest();
+  },
+
+  // 模态框取消事件
+  onModalCancel() {
+    console.log('用户取消开始测试');
+    // 关闭模态框
+    this.setData({ showTestModal: false });
+  },
+
+  // 继续测试弹窗确认事件
+  onContinueTestConfirm() {
+    console.log('用户选择继续测试');
+    // 关闭弹窗
+    this.setData({
+      showContinueTestModal: false,
+      currentAssessment: null,
+      continueTestProgress: 0
+    });
+    // 继续测试
+    this.continueTest();
+  },
+
+  // 继续测试弹窗取消事件
+  onContinueTestCancel() {
+    console.log('用户选择重新开始');
+    // 关闭弹窗
+    this.setData({
+      showContinueTestModal: false,
+      currentAssessment: null,
+      continueTestProgress: 0
+    });
+    // 重新开始测试
+    this.startNewTest();
   },
 
   // 继续测试
   continueTest() {
     console.log('继续测试');
 
+    // 获取下一个未回答题目的索引
+    const nextQuestionIndex = app.getNextQuestionIndex();
+    console.log('下一个未回答题目的索引:', nextQuestionIndex);
+
     this.setData({ isLoading: true });
 
     setTimeout(() => {
       this.setData({ isLoading: false });
 
+      // 传递起始题目索引给测试页
       wx.navigateTo({
-        url: '/pages/test/test',
+        url: `/pages/test/test?startIndex=${nextQuestionIndex}`,
         success: () => {
-          console.log('跳转到测试页继续测试');
+          console.log('跳转到测试页继续测试，从第', nextQuestionIndex + 1, '题开始');
         }
       });
     }, 500);

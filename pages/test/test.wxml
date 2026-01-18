@@ -8,78 +8,51 @@
     mode="aspectFill"
   />
 
-  <!-- 顶部进度栏 -->
-  <view class="progress-header">
-    <view class="progress-container">
-      <view class="progress-info">
-        <text class="progress-number">第{{currentQuestionIndex + 1}}题</text>
-        <text class="progress-text">/ 共{{totalQuestions}}题</text>
-      </view>
-      <text class="progress-percentage">{{progress}}%</text>
-    </view>
-    <view class="progress-bar-container">
-      <view class="progress-bar-fill" style="width: {{progress}}%;"></view>
-    </view>
+  <!-- 题目区域 -->
+  <view class="question-container">
+    <!-- <text class="question-dimension">{{currentQuestion.dimension === 'anxiety' ? '焦虑维度' : '回避维度'}}</text> -->
+    <text class="question-text">{{currentQuestionIndex + 1}}. {{currentQuestion.text}}</text>
   </view>
 
   <!-- 主要内容区域 -->
   <view class="test-content">
-
-    <!-- 题目区域 -->
-    <view class="question-section {{animationClass}}">
-      <view class="question-container">
-        <view class="question-header">
-          <text class="question-number">Q{{currentQuestionIndex + 1}}</text>
-          <text class="question-dimension">{{currentQuestion.dimension === 'anxiety' ? '焦虑维度' : '回避维度'}}</text>
-        </view>
-        <text class="question-text">{{currentQuestion.text}}</text>
-        <text class="question-hint">请根据您的真实感受选择最符合的选项</text>
-      </view>
-    </view>
-
     <!-- 选项区域 -->
-    <view class="options-section">
-      <text class="options-title">选择最符合您情况的选项</text>
-
-      <view class="options-container">
-        <view
-          wx:for="{{scaleOptions}}"
-          wx:key="value"
-          class="option-item {{selectedOption === item.value ? 'selected' : ''}}"
-          bindtap="selectOption"
-          data-value="{{item.value}}"
-        >
-          <text class="option-value">{{item.value}}</text>
-          <text class="option-label">{{item.label}}</text>
-          <image
-            wx:if="{{selectedOption === item.value}}"
-            src="/assets/icons/check.svg"
-            class="option-check"
-            mode="aspectFit"
-          />
-        </view>
-      </view>
-
-      <!-- 量表说明 -->
-      <view class="scale-explanation">
-        <text class="scale-title">7点李克特量表说明</text>
-        <text class="scale-desc">
-          1=非常不同意，2=不同意，3=有点不同意，4=中立/不确定，
-          5=有点同意，6=同意，7=非常同意
-        </text>
+    <view class="options-container">
+      <view
+        wx:for="{{scaleOptions}}"
+        wx:key="value"
+        class="option-item {{selectedOption === item.value ? 'selected' : ''}}"
+        bindtap="selectOption"
+        data-value="{{item.value}}"
+      >
+        <text class="option-label">{{item.label}}</text>
+        <image
+          wx:if="{{selectedOption === item.value}}"
+          src="/assets/icons/check.svg"
+          class="option-check"
+          mode="aspectFit"
+        />
       </view>
     </view>
 
+    <!-- 进度条区域 -->
+    <view class="progress-bar-container">
+      <view class="progress-bar-fill" style="width: {{indicatorPosition}}%;">
+        <image
+        src="/assets/images/xiaoba2.png"
+        class="progress-indicator"
+        style="left: {{indicatorPosition}}%"
+        mode="aspectFit"
+        />
+      </view>
+    </view>
   </view>
 
   <!-- 导航区域 -->
   <view class="navigation-section">
-    <button
-      class="nav-button nav-button-prev"
-      bindtap="goToPrevious"
-      disabled="{{currentQuestionIndex === 0}}"
-    >
-      <image src="/assets/icons/arrow-left.svg" class="nav-button-icon" mode="aspectFit" />
+
+    <button class="nav-button nav-button-prev" bindtap="goToPrevious" disabled="{{currentQuestionIndex === 0}}">
+      <image src="/assets/icons/arrow-left.svg" class="nav-button-icon-left" mode="aspectFit" />
       <text>上一题</text>
     </button>
 
@@ -90,7 +63,7 @@
       disabled="{{!selectedOption}}"
     >
       <text>下一题</text>
-      <image src="/assets/icons/arrow-right.svg" class="nav-button-icon" mode="aspectFit" />
+      <image src="/assets/icons/arrow-right.svg" class="nav-button-icon-right" mode="aspectFit" />
     </button>
 
     <button
@@ -100,18 +73,7 @@
       disabled="{{!selectedOption}}"
     >
       <text>完成测试</text>
-      <image src="/assets/icons/check.svg" class="nav-button-icon" mode="aspectFit" />
+      <image src="/assets/icons/check.svg" class="nav-button-icon-complete" mode="aspectFit" />
     </button>
   </view>
-
-  <!-- 底部提示 -->
-  <view class="bottom-hint">
-    <text>所有答案会自动保存，您可以随时返回修改</text>
-  </view>
-
-  <!-- 加载状态 -->
-  <view wx:if="{{isLoading}}" class="loading-overlay">
-    <view class="loading-spinner"></view>
-  </view>
-
 </view>

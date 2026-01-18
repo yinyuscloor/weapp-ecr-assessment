@@ -73,8 +73,12 @@
     0 2px 8px rgba(0, 0, 0, 0.1),  /* 原有阴影 */
     0 0 0 1px rgba(0, 0, 0, 0.1),  /* 内边框效果 */
     0 0 20px rgba(0, 0, 0, 0.1) !important;   /* 光晕效果 */
-  border: 0.5px solid rgba(0, 0, 0, 0.3);
+  /* border: 0.5px solid rgba(0, 0, 0, 0.3); */
   margin: 12px;
+}
+
+.start-button:active {
+  background: linear-gradient(90deg, transparent, rgba(24, 144, 255, 0.1));
 }
 
 .results-button {
@@ -91,8 +95,12 @@
     0 2px 8px rgba(0, 0, 0, 0.1),  /* 原有阴影 */
     0 0 0 1px rgba(0, 0, 0, 0.1),  /* 内边框效果 */
     0 0 20px rgba(0, 0, 0, 0.1) !important;   /* 光晕效果 */
-  border: 0.5px solid rgba(0, 0, 0, 0.3);
+  /* border: 0.5px solid rgba(0, 0, 0, 0.3); */
   margin: 12px;
+}
+
+.results-button:active {
+  background: linear-gradient(90deg, transparent, rgba(24, 144, 255, 0.1));
 }
 
 .start-button-icon {
