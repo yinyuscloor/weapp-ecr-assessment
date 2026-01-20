@@ -273,7 +273,7 @@ Page({
 
   // 完成测试
   completeTest() {
-    const { selectedOption, responses } = this.data;
+    const { selectedOption } = this.data;
 
     // 检查当前题目是否已回答
     if (!selectedOption) {
@@ -281,7 +281,7 @@ Page({
       return;
     }
 
-    // 直接完成测试
+    // 允许在有未回答题目的情况下完成测试，ecrService会自动处理缺失数据
     this.finalizeTest();
   },
 
