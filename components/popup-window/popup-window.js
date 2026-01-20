@@ -116,10 +116,10 @@ Component({
   // 组件生命周期
   lifetimes: {
     attached() {
-      console.log('模态框组件被附加');
+      // 模态框组件被附加
     },
     detached() {
-      console.log('模态框组件被移除');
+      // 模态框组件被移除
     }
   }
 });

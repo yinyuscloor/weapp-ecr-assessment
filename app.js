@@ -25,12 +25,12 @@ App({
 
   // 小程序启动，或从后台进入前台显示时触发
   onShow(options) {
-    console.log('小程序显示');
+    // 小程序显示
   },
 
   // 小程序从前台进入后台时触发
   onHide() {
-    console.log('小程序隐藏');
+    // 小程序隐藏
   },
 
   // 小程序发生脚本错误或 API 调用报错时触发
@@ -53,7 +53,6 @@ App({
     try {
       const systemInfo = wx.getSystemInfoSync();
       this.globalData.systemInfo = systemInfo;
-      console.log('系统信息:', systemInfo);
 
       // 根据系统信息调整设计
       this.adjustDesignForSystem(systemInfo);
@@ -80,7 +79,7 @@ App({
       const updateManager = wx.getUpdateManager();
 
       updateManager.onCheckForUpdate(function(res) {
-        console.log('检查更新结果:', res.hasUpdate);
+        // 检查更新结果
       });
 
       updateManager.onUpdateReady(function() {
@@ -106,8 +105,7 @@ App({
 
   // 初始化设计系统
   initDesignSystem() {
-    // 这里可以初始化一些设计相关的设置
-    console.log('设计系统初始化完成');
+    // 初始化设计相关的设置
   },
 
   // 工具函数：显示加载提示
@@ -163,7 +161,6 @@ App({
     this.globalData.currentAssessment = assessment;
     this.globalData.testInProgress = true;
 
-    console.log('开始新测试:', assessment.id);
     return assessment;
   },
 
@@ -189,7 +186,6 @@ App({
       const isCompleted = assessment.responses.every(r => r !== null);
       assessment.isCompleted = isCompleted;
 
-      console.log(`更新问题 ${questionIndex + 1} 的答案:`, response);
       return true;
     }
 
@@ -208,7 +204,6 @@ App({
     assessment.completedAt = new Date();
     this.globalData.testInProgress = false;
 
-    console.log('测试完成:', assessment.id);
     return assessment;
   },
 
@@ -216,7 +211,6 @@ App({
   resetAssessment() {
     this.globalData.currentAssessment = null;
     this.globalData.testInProgress = false;
-    console.log('测试已重置');
   },
 
   // 获取测试进度

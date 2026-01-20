@@ -40,13 +40,10 @@ Page({
 
   // 页面加载
   onLoad(options) {
-    console.log('测试页加载', options);
-
     // 检查是否有传递的起始题目索引
     if (options.startIndex !== undefined) {
       const startIndex = parseInt(options.startIndex);
       if (!isNaN(startIndex) && startIndex >= 0 && startIndex < 36) {
-        console.log('设置起始题目索引:', startIndex);
         this.setData({
           currentQuestionIndex: startIndex
         });
@@ -59,16 +56,12 @@ Page({
 
   // 页面显示
   onShow() {
-    console.log('测试页显示');
-
     // 检查测试状态
     this.checkTestStatus();
   },
 
   // 页面卸载
   onUnload() {
-    console.log('测试页卸载');
-
     // 自动保存进度
     this.saveProgress();
   },
@@ -80,11 +73,9 @@ Page({
     // 获取当前测试
     const assessment = app.getCurrentAssessment();
     if (!assessment) {
-      console.log('没有进行中的测试，创建新测试');
       app.startNewAssessment();
       this.loadQuestions();
     } else {
-      console.log('继续现有测试:', assessment.id);
       this.setData({
         assessment: assessment,
         responses: assessment.responses
@@ -115,8 +106,6 @@ Page({
 
       // 加载当前题目
       this.loadCurrentQuestion();
-
-      console.log('题目加载完成，共', orderedQuestions.length, '题');
     } catch (error) {
       console.error('加载题目失败:', error);
       this.showError('加载题目失败，请重试');
@@ -159,15 +148,12 @@ Page({
       isLastQuestion: isLastQuestion,
       indicatorPosition: indicatorPosition
     });
-
-    console.log(`加载第${currentQuestionIndex + 1}题:`, currentQuestion.text);
   },
 
   // 检查测试状态
   checkTestStatus() {
     const assessment = app.getCurrentAssessment();
     if (!assessment) {
-      console.warn('测试不存在，返回首页');
       this.redirectToIndex();
       return;
     }
@@ -176,7 +162,6 @@ Page({
 
     // 如果测试已完成，跳转到结果页
     if (assessment.isCompleted) {
-      console.log('测试已完成，跳转到结果页');
       this.navigateToResult();
     }
   },
@@ -187,13 +172,11 @@ Page({
     const { currentQuestion, responses, isLastQuestion } = this.data;
 
     if (!currentQuestion || !value) {
-      console.error('选择选项失败: 无效的参数');
       return;
     }
 
     // 验证答案
     if (!questions.validateResponse(value)) {
-      console.error('无效的答案:', value);
       return;
     }
 
@@ -209,28 +192,19 @@ Page({
     // 保存到全局
     this.saveResponse(questionId, value);
 
-    console.log(`问题 ${questionId} 选择答案:`, value);
-
     // 延迟后根据题目位置决定下一步操作
     setTimeout(() => {
-      if (isLastQuestion) {
-        // 最后一题：等待用户手动点击完成测试
-        console.log(`问题 ${questionId} 已回答，等待用户点击完成测试`);
-      } else {
+      if (!isLastQuestion) {
         // 非最后一题：自动跳转到下一题
         this.goToNext();
       }
-    }, 100); // 100毫秒延迟，让用户看到选中效果
+      // 最后一题：等待用户手动点击完成测试
+    }, 100);
   },
 
   // 保存答案到全局
   saveResponse(questionId, response) {
-    const success = app.updateAssessmentResponse(questionId - 1, response);
-    if (success) {
-      console.log('答案已保存到全局');
-    } else {
-      console.error('保存答案失败');
-    }
+    app.updateAssessmentResponse(questionId - 1, response);
   },
 
   // 保存进度
@@ -240,8 +214,6 @@ Page({
 
     // 更新答案数组
     assessment.responses = responses;
-
-    console.log('进度已保存');
   },
 
 
@@ -267,8 +239,6 @@ Page({
     setTimeout(() => {
       this.loadCurrentQuestion();
     }, 50);
-
-    console.log('跳转到上一题，新索引:', newIndex);
   },
 
   // 跳转到下一题
@@ -299,13 +269,11 @@ Page({
     setTimeout(() => {
       this.loadCurrentQuestion();
     }, 50);
-
-    console.log('跳转到下一题，新索引:', newIndex);
   },
 
   // 完成测试
   completeTest() {
-    const { selectedOption, responses } = this.data;
+    const { selectedOption } = this.data;
 
     // 检查当前题目是否已回答
     if (!selectedOption) {
@@ -313,18 +281,8 @@ Page({
       return;
     }
 
-    // 检查是否所有题目都已回答
-    const unanswered = responses.filter(r => r === null || r === undefined).length;
-
-    if (unanswered > 0) {
-      // 有未回答的题目，直接完成测试
-      console.log(`有${unanswered}道题目未回答，直接完成测试`);
-      this.finalizeTest();
-    } else {
-      // 所有题目都已回答，直接完成测试
-      console.log('所有题目已回答，完成测试');
-      this.finalizeTest();
-    }
+    // 允许在有未回答题目的情况下完成测试，ecrService会自动处理缺失数据
+    this.finalizeTest();
   },
 
   // 最终完成测试
@@ -336,13 +294,11 @@ Page({
     // 计算测试结果
     try {
       const result = ecrService.calculateResult(responses);
-      console.log('测试结果计算完成:', result);
 
       // 完成测试
       const assessment = app.completeAssessment();
       if (assessment) {
         assessment.result = result;
-        console.log('测试已完成:', assessment.id);
       }
 
       // 跳转到结果页
@@ -362,7 +318,6 @@ Page({
   navigateToResult() {
     const assessment = app.getCurrentAssessment();
     if (!assessment || !assessment.result) {
-      console.error('没有测试结果');
       this.showError('无法显示结果，请重试测试');
       return;
     }
@@ -372,8 +327,7 @@ Page({
 
     wx.redirectTo({
       url: `/pages/result/result?result=${encodeURIComponent(resultJson)}`,
-      fail: (error) => {
-        console.error('跳转到结果页失败:', error);
+      fail: () => {
         this.showError('跳转失败，请重试');
       }
     });
@@ -421,9 +375,7 @@ Page({
 
 
   // 错误处理
-  onError(error) {
-    console.error('测试页错误:', error);
-
+  onError() {
     // 显示错误提示
     this.showError('测试加载失败，请返回重试');
   }

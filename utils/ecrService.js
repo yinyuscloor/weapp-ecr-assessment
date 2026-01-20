@@ -126,9 +126,6 @@ class ECRService {
 
     // 检查是否有未回答的题目
     const unanswered = responses.filter(r => r === null || r === undefined).length;
-    if (unanswered > 0) {
-      console.warn(`有${unanswered}道题目未回答`);
-    }
 
     // 计算维度分数
     const anxious = this.calculateAnxiousScore(responses);
@@ -274,12 +271,8 @@ class ECRService {
       return null;
     }
 
-    // 寻找上一道题目
-    for (let i = currentQuestionId - 1; i >= 1; i--) {
-      return i;
-    }
-
-    return null;
+    // 返回上一道题目的ID
+    return currentQuestionId - 1;
   }
 
   /**

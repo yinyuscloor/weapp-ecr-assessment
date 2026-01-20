@@ -90,11 +90,8 @@ Page({
 
   // 页面加载
   onLoad(options) {
-    console.log('结果页加载', options);
-
     // 检查是否有示例模式
     if (options.sample === 'true') {
-      console.log('加载示例结果');
       this.loadSampleResult();
       return;
     }
@@ -103,7 +100,6 @@ Page({
     if (options.result) {
       try {
         const resultData = JSON.parse(decodeURIComponent(options.result));
-        console.log('从URL参数加载结果:', resultData);
         this.processResult(resultData);
         return;
       } catch (error) {
@@ -117,7 +113,7 @@ Page({
 
   // 页面显示
   onShow() {
-    console.log('结果页显示');
+    // 页面显示
   },
 
   // 从全局数据加载结果
@@ -126,12 +122,10 @@ Page({
 
     const assessment = app.getCurrentAssessment();
     if (!assessment || !assessment.result) {
-      console.error('没有可用的测试结果');
       this.showError('没有找到测试结果，请先完成测试');
       return;
     }
 
-    console.log('从全局数据加载结果:', assessment.result);
     this.processResult(assessment.result);
   },
 
@@ -174,14 +168,11 @@ Page({
   // 处理结果数据
   processResult(resultData) {
     try {
-      console.log('处理结果数据:', resultData);
-
       // 提取主要数据
       const { anxious, avoidant, style, scores, statistics } = resultData;
 
       // 获取依恋类型描述
       const description = descriptions.getDescription(style);
-      console.log('description:', description)
 
       // 构建结果摘要
       const resultSummary = {
@@ -215,7 +206,6 @@ Page({
         scoresData.anxiety.normalized,
         scoresData.avoidance.normalized
       );
-      console.log('radarData:', radarData)
 
       // 获取动物比喻数据
       const animalData = descriptions.getAnimalData(style);
@@ -245,8 +235,6 @@ Page({
           answeredQuestions: statistics?.answeredQuestions || 36
         }
       });
-
-      console.log('结果处理完成，依恋类型:', style);
 
     } catch (error) {
       console.error('处理结果数据失败:', error);
@@ -299,8 +287,6 @@ Page({
 
   // 重新测试
   retakeTest() {
-    console.log('重新测试');
-
     // 显示确认对话框
     wx.showModal({
       title: '重新测试',
@@ -314,10 +300,7 @@ Page({
 
           // 跳转到首页
           wx.reLaunch({
-            url: '/pages/index/index',
-            success: () => {
-              console.log('跳转到首页成功');
-            }
+            url: '/pages/index/index'
           });
         }
       }
@@ -326,8 +309,6 @@ Page({
 
   // 分享结果
   shareResult() {
-    console.log('分享结果');
-
     // 生成分享摘要
     const { resultSummary, scores } = this.data;
     const shareText = `我的ECR依恋测试结果：${resultSummary.title}\n` +
@@ -374,18 +355,12 @@ Page({
 
   // 分享到聊天
   onShareAppMessage() {
-    const { resultSummary, scores } = this.data;
+    const { resultSummary } = this.data;
 
     return {
       title: `我的ECR依恋测试结果：${resultSummary.label}`,
       path: '/pages/result/result',
-      imageUrl: '/assets/images/share-result.svg',
-      success: () => {
-        console.log('分享成功');
-      },
-      fail: (error) => {
-        console.error('分享失败:', error);
-      }
+      imageUrl: '/assets/images/share-result.svg'
     };
   },
 
@@ -402,18 +377,16 @@ Page({
 
   // 页面到底部
   onReachBottom() {
-    console.log('页面到底部');
     // 可以在这里加载更多内容
   },
 
   // 页面卸载
   onUnload() {
-    console.log('结果页卸载');
+    // 页面卸载
   },
 
   // 错误处理
-  onError(error) {
-    console.error('结果页错误:', error);
+  onError() {
     this.showError('页面发生错误，请重试');
   }
 });
