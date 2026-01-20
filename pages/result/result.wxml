@@ -13,12 +13,13 @@
       <!-- 左侧：标题和标签 -->
       <view class="header-left">
         <text class="header-title">你的依恋类型为</text>
-        <text class="attachment-title">{{resultSummary.label}}</text>
+        <text class="attachment-title">{{resultSummary.title}}</text>
         <view class="tag-container">
-          <view wx:for="{{topCharacteristics}}" wx:key="index" class="tag">
+          <view wx:for="{{resultSummary.labels}}" wx:key="index" class="tag">
             <text class="tag-text">#{{item}}</text>
           </view>
         </view>
+        <text class="attachment-title">约{{resultSummary.percentage}}人是该类型</text>
       </view>
 
       <!-- 右侧：插画盒子 -->
@@ -30,21 +31,19 @@
     </view>
   </view>
 
-  <!-- 指标区（Flex Row） -->
   <view class="metrics-section">
-    <!-- 左侧：四角雷达图 -->
+    <!-- todo有问题 -->
     <view class="radar-container">
       <text class="section-title">依恋维度分布</text>
-      <view class="radar-chart">
-        <!-- 使用CSS clip-path实现简单雷达图 -->
-        <view class="radar-polygon" style="clip-path: polygon(50% {{100 - radarData.security}}%, {{radarData.anxiety}}% 50%, 50% {{radarData.fear}}%, {{100 - radarData.avoidance}}% 50%)"></view>
-        <view class="radar-labels">
-          <text class="radar-label">安全</text>
-          <text class="radar-label">焦虑</text>
-          <text class="radar-label">恐惧</text>
-          <text class="radar-label">回避</text>
-        </view>
-      </view>
+      <radar-chart
+        id="radarChart"
+        data="{{radarChartData}}"
+        indicators="{{indicators}}"
+        theme-color="#4680FF"
+        size-ratio="0.35"
+        area-opacity="0.4"
+        show-score="{{true}}"
+      ></radar-chart>
     </view>
 
     <!-- 右侧："关于你"卡片 -->
@@ -90,8 +89,8 @@
     <view class="detail-card">
       <text class="detail-title">底层逻辑</text>
       <view class="detail-content">
-        <view wx:for="{{relationshipPatterns}}" wx:key="index" class="pattern-item">
-          <text class="pattern-text">{{item}}</text>
+        <view wx:for="{{resultSummary.logic}}" wx:key="index" >
+          <text>{{item}}</text>
         </view>
       </view>
     </view>

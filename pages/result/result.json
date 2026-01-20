@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "radar-chart": "/components/radar-chart/radar-chart"
+  },
   "navigationBarTitleText": "ECR依恋测试",
   "navigationBarBackgroundColor": "#f6fdfd",
   "backgroundColor": "#f6fdfd",

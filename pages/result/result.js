@@ -50,6 +50,14 @@ Page({
       avoidance: 0,
       fear: 0
     },
+    // 雷达图组件数据
+    radarChartData: [0, 0, 0, 0], // 数组格式：[安全, 焦虑, 回避, 恐惧]
+    indicators: [
+      { name: '安全' },
+      { name: '焦虑' },
+      { name: '回避' },
+      { name: '恐惧' }
+    ],
     animalData: {
       animal: '',
       icon: '',
@@ -173,12 +181,13 @@ Page({
 
       // 获取依恋类型描述
       const description = descriptions.getDescription(style);
+      console.log('description:', description)
 
       // 构建结果摘要
       const resultSummary = {
         title: description.title,
         percentage: description.percentage,
-        labels: description.labels,
+        labels: description.labels.slice(0, 3),
         summary: description.summary,
         logic: description.logic,
         color: description.color,
@@ -206,12 +215,10 @@ Page({
         scoresData.anxiety.normalized,
         scoresData.avoidance.normalized
       );
+      console.log('radarData:', radarData)
 
       // 获取动物比喻数据
       const animalData = descriptions.getAnimalData(style);
-
-      // 获取前3个特征作为标签
-      const topCharacteristics = resultSummary.labels.slice(0, 3);
 
       // 构建数据指标
       const dataMetrics = {
@@ -228,6 +235,7 @@ Page({
         resultSummary: resultSummary,
         scores: scoresData,
         radarData: radarData,
+        radarChartData: [radarData.security, radarData.anxiety, radarData.avoidance, radarData.fear],
         animalData: animalData,
         dataMetrics: dataMetrics,
         testInfo: {
