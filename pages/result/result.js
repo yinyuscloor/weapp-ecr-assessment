@@ -19,12 +19,14 @@ Page({
     result: null,
     resultSummary: {
       title: '安全型依恋',
-      subtitle: '您拥有健康稳定的依恋模式',
+      percentage: '50%',
+      labels: ['tt'],
       summary: '加载中...',
-      label: '安全型',
+      logic: ['tt'],
       color: '#10b981',
       bgColor: '#d1fae5',
-      textColor: '#3E2723'
+      textColor: '#3E2723',
+      icon: '12'
     },
 
     // 分数数据
@@ -41,15 +43,6 @@ Page({
       }
     },
 
-    // 依恋类型
-    attachmentStyle: 'secure',
-
-    // 详细内容
-    characteristics: [],
-    growthSuggestions: [],
-    relationshipPatterns: [],
-    compatibilityNotes: [],
-
     // 新布局数据字段
     radarData: {
       security: 0,
@@ -65,7 +58,7 @@ Page({
       characteristics: [],
       metaphor: ''
     },
-    topCharacteristics: [],
+
     dataMetrics: {
       animal: '',
       highAnxiety: 0,
@@ -180,17 +173,18 @@ Page({
 
       // 获取依恋类型描述
       const description = descriptions.getDescription(style);
-      const label = descriptions.getLabel(style);
 
       // 构建结果摘要
       const resultSummary = {
         title: description.title,
-        subtitle: description.subtitle,
+        percentage: description.percentage,
+        labels: description.labels,
         summary: description.summary,
-        label: label.label,
-        color: label.color,
-        bgColor: label.bgColor,
-        textColor: label.textColor
+        logic: description.logic,
+        color: description.color,
+        bgColor: description.bgColor,
+        textColor: description.textColor,
+        icon: description.icon
       };
 
       // 构建分数数据
@@ -207,12 +201,6 @@ Page({
         }
       };
 
-      // 获取详细内容
-      const characteristics = description.characteristics.slice(0, 5);
-      const growthSuggestions = description.growthSuggestions.slice(0, 3);
-      const relationshipPatterns = description.relationshipPatterns.slice(0, 3);
-      const compatibilityNotes = description.compatibilityNotes.slice(0, 2);
-
       // 计算雷达图数据
       const radarData = descriptions.calculateRadarData(
         scoresData.anxiety.normalized,
@@ -223,7 +211,7 @@ Page({
       const animalData = descriptions.getAnimalData(style);
 
       // 获取前3个特征作为标签
-      const topCharacteristics = description.characteristics.slice(0, 3);
+      const topCharacteristics = resultSummary.labels.slice(0, 3);
 
       // 构建数据指标
       const dataMetrics = {
@@ -239,14 +227,8 @@ Page({
         result: resultData,
         resultSummary: resultSummary,
         scores: scoresData,
-        attachmentStyle: style,
-        characteristics: characteristics,
-        growthSuggestions: growthSuggestions,
-        relationshipPatterns: relationshipPatterns,
-        compatibilityNotes: compatibilityNotes,
         radarData: radarData,
         animalData: animalData,
-        topCharacteristics: topCharacteristics,
         dataMetrics: dataMetrics,
         testInfo: {
           timestamp: resultData.timestamp || new Date(),
@@ -408,24 +390,6 @@ Page({
       query: 'from=timeline',
       imageUrl: '/assets/images/share-timeline.svg'
     };
-  },
-
-  // 页面下拉刷新
-  onPullDownRefresh() {
-    console.log('结果页下拉刷新');
-
-    // 重新加载结果
-    this.loadResultFromGlobal();
-
-    // 停止下拉刷新
-    wx.stopPullDownRefresh();
-
-    // 显示刷新完成提示
-    wx.showToast({
-      title: '刷新完成',
-      icon: 'success',
-      duration: 1000
-    });
   },
 
   // 页面到底部
