@@ -269,8 +269,8 @@ const ANXIETY_QUESTION_IDS = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27,
 // 回避依恋题目ID列表 (1-36中的偶数)
 const AVOIDANCE_QUESTION_IDS = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36];
 
-// 需要反向计分的题目ID列表
-const REVERSE_SCORED_IDS = [6, 9, 15, 19, 22, 25, 27, 30, 31, 33, 36];
+// 需要反向计分的题目ID列表（根据ECR_QUESTIONS中reverse: true的题目）
+const REVERSE_SCORED_IDS = [6, 9, 11, 16, 20, 23, 28, 29, 32];
 
 // 量表信息
 const SCALE_INFO = {
