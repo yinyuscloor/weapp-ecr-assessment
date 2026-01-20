@@ -12,7 +12,6 @@ Page({
   data: {
     // 测试状态
     isLoading: false,
-    isInitialized: false,
 
     // 题目数据
     questions: [],
@@ -27,7 +26,6 @@ Page({
     responses: new Array(36).fill(null),
 
     // 进度信息
-    progress: 0,
     indicatorPosition: 0,
 
     // 7点量表选项
@@ -35,9 +33,6 @@ Page({
 
     // 导航状态
     isLastQuestion: false,
-
-    // 动画类
-    animationClass: 'slide-in-right',
 
     // 测试信息
     assessment: null
@@ -68,9 +63,6 @@ Page({
 
     // 检查测试状态
     this.checkTestStatus();
-
-    // 更新进度
-    this.updateProgress();
   },
 
   // 页面卸载
@@ -118,7 +110,6 @@ Page({
         questions: orderedQuestions,
         totalQuestions: orderedQuestions.length,
         scaleOptions: scaleOptions,
-        isInitialized: true,
         isLoading: false
       });
 
@@ -166,7 +157,6 @@ Page({
       currentQuestion: currentQuestion,
       selectedOption: selectedOption,
       isLastQuestion: isLastQuestion,
-      animationClass: 'fade-in',
       indicatorPosition: indicatorPosition
     });
 
@@ -219,9 +209,6 @@ Page({
     // 保存到全局
     this.saveResponse(questionId, value);
 
-    // 更新进度
-    this.updateProgress();
-
     console.log(`问题 ${questionId} 选择答案:`, value);
 
     // 延迟后根据题目位置决定下一步操作
@@ -233,7 +220,7 @@ Page({
         // 非最后一题：自动跳转到下一题
         this.goToNext();
       }
-    }, 300); // 300毫秒延迟，让用户看到选中效果
+    }, 100); // 100毫秒延迟，让用户看到选中效果
   },
 
   // 保存答案到全局
@@ -257,15 +244,6 @@ Page({
     console.log('进度已保存');
   },
 
-  // 更新进度
-  updateProgress() {
-    const { responses } = this.data;
-    const progress = ecrService.calculateProgress(responses);
-
-    this.setData({ progress: progress });
-
-    console.log('进度更新:', progress + '%');
-  },
 
   // 跳转到上一题
   goToPrevious() {
@@ -282,8 +260,7 @@ Page({
     const newIndex = currentQuestionIndex - 1;
 
     this.setData({
-      currentQuestionIndex: newIndex,
-      animationClass: 'slide-in-left'
+      currentQuestionIndex: newIndex
     });
 
     // 加载新题目
@@ -315,8 +292,7 @@ Page({
 
     this.setData({
       currentQuestionIndex: newIndex,
-      selectedOption: null, // 重置选择
-      animationClass: 'slide-in-right'
+      selectedOption: null // 重置选择
     });
 
     // 加载新题目
@@ -410,22 +386,6 @@ Page({
     });
   },
 
-  // 显示确认对话框
-  showConfirm(title, content, confirmCallback, cancelCallback) {
-    wx.showModal({
-      title: title,
-      content: content,
-      confirmText: '确定',
-      cancelText: '取消',
-      success: (res) => {
-        if (res.confirm) {
-          confirmCallback && confirmCallback();
-        } else if (res.cancel) {
-          cancelCallback && cancelCallback();
-        }
-      }
-    });
-  },
 
   // 显示提示
   showToast(message) {
@@ -459,23 +419,6 @@ Page({
     };
   },
 
-  // 页面下拉刷新
-  onPullDownRefresh() {
-    console.log('测试页下拉刷新');
-
-    // 重新加载题目
-    this.loadQuestions();
-
-    // 停止下拉刷新
-    wx.stopPullDownRefresh();
-
-    // 显示刷新完成提示
-    wx.showToast({
-      title: '刷新完成',
-      icon: 'success',
-      duration: 1000
-    });
-  },
 
   // 错误处理
   onError(error) {

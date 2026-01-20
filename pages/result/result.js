@@ -50,6 +50,28 @@ Page({
     relationshipPatterns: [],
     compatibilityNotes: [],
 
+    // 新布局数据字段
+    radarData: {
+      security: 0,
+      anxiety: 0,
+      avoidance: 0,
+      fear: 0
+    },
+    animalData: {
+      animal: '',
+      icon: '',
+      color: '',
+      description: '',
+      characteristics: [],
+      metaphor: ''
+    },
+    topCharacteristics: [],
+    dataMetrics: {
+      animal: '',
+      highAnxiety: 0,
+      highAvoidance: 0
+    },
+
     // 展开/收起状态
     showCharacteristics: true,
     showSuggestions: false,
@@ -145,7 +167,7 @@ Page({
     // 模拟加载延迟
     setTimeout(() => {
       this.processResult(sampleResult);
-    }, 800);
+    }, 100);
   },
 
   // 处理结果数据
@@ -191,6 +213,25 @@ Page({
       const relationshipPatterns = description.relationshipPatterns.slice(0, 3);
       const compatibilityNotes = description.compatibilityNotes.slice(0, 2);
 
+      // 计算雷达图数据
+      const radarData = descriptions.calculateRadarData(
+        scoresData.anxiety.normalized,
+        scoresData.avoidance.normalized
+      );
+
+      // 获取动物比喻数据
+      const animalData = descriptions.getAnimalData(style);
+
+      // 获取前3个特征作为标签
+      const topCharacteristics = description.characteristics.slice(0, 3);
+
+      // 构建数据指标
+      const dataMetrics = {
+        animal: animalData.animal,
+        highAnxiety: scoresData.anxiety.normalized,
+        highAvoidance: scoresData.avoidance.normalized
+      };
+
       // 更新数据
       this.setData({
         isLoading: false,
@@ -203,6 +244,10 @@ Page({
         growthSuggestions: growthSuggestions,
         relationshipPatterns: relationshipPatterns,
         compatibilityNotes: compatibilityNotes,
+        radarData: radarData,
+        animalData: animalData,
+        topCharacteristics: topCharacteristics,
+        dataMetrics: dataMetrics,
         testInfo: {
           timestamp: resultData.timestamp || new Date(),
           completionRate: statistics?.completionRate || 100,
