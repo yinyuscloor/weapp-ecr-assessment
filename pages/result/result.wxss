@@ -42,26 +42,19 @@ view, text, image, button, input, textarea, navigator {
 
 .header-container {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   gap: 16px; /* Tailwind: gap-4 */
 }
 
-/* 移动端大于480px时改为水平布局 */
-@media screen and (min-width: 480px) {
-  .header-container {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+.header-left {
+  flex: 1;
+}
 
-  .header-left {
-    flex: 1;
-  }
-
-  .header-right {
-    flex-shrink: 0;
-  }
+.header-right {
+  flex-shrink: 0;
+  display: flex;
 }
 
 /* 左侧标题区域 */
@@ -77,10 +70,41 @@ view, text, image, button, input, textarea, navigator {
   font-weight: 400; /* --font-weight-normal */
 }
 
+/* 焦虑型-#e76a04，安全-#13a1c9，回避型-#8A9BA8，恐惧型-7B5C9A*/
 .attachment-title {
-  font-size: 24px; /* Tailwind: text-2xl */
-  color: #3c3c3c; /* --color-text-primary */
+  font-size: 42px; /* Tailwind: text-2xl */
   font-weight: 700; /* --font-weight-bold */
+  text-align: left;
+}
+
+.percentage-bold {
+  font-weight: 700; /* 只给百分比加粗体 */
+}
+
+/* 依恋类型颜色方案 - 同时应用于attachment-title和percentage-bold */
+.attachment-title-secure,
+.percentage-bold-secure {
+  color: #13a1c9; /* 安全型 */
+}
+
+.attachment-title-anxious,
+.percentage-bold-anxious {
+  color: #e76a04; /* 焦虑型 */
+}
+
+.attachment-title-avoidant,
+.percentage-bold-avoidant {
+  color: #8A9BA8; /* 回避型 */
+}
+
+.attachment-title-disorganized,
+.percentage-bold-disorganized {
+  color: #7B5C9A; /* 恐惧型 */
+}
+
+.per-title {
+  font-size: 22px;
+  color: #3c3c3c;
 }
 
 /* 标签容器 */
@@ -93,14 +117,14 @@ view, text, image, button, input, textarea, navigator {
 
 .tag {
   display: inline-block;
-  padding: 4px 8px; /* Tailwind: px-2 py-1 */
-  background-color: #f0ede9; /* --color-bg-tertiary */
-  border-radius: 9999px; /* --radius-full */
-  border: 1px solid #d5cfc8; /* --color-border-medium */
+  padding: 2px 6px;
+  background-color: #ffffff;
+  border-radius: 9999px;
+  border: 0.5px solid #d5cfc8; 
 }
 
 .tag-text {
-  font-size: 12px; /* Tailwind: text-xs */
+  font-size: 10px; /* Tailwind: text-xs */
   color: #666666; /* --color-text-secondary */
   font-weight: 500; /* --font-weight-medium */
 }
@@ -109,13 +133,16 @@ view, text, image, button, input, textarea, navigator {
 .illustration-box {
   width: 120px;
   height: 120px;
-  border-radius: 12px; /* --radius-lg */
-  overflow: hidden;
-  background-color: #f5f3f0; /* --color-bg-secondary */
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(161, 136, 127, 0.1); /* --shadow-md */
+}
+
+/* 移动端大于480px时调整插画大小 */
+@media screen and (min-width: 480px) {
+  .illustration-box {
+    width: 120px;
+    height: 120px;
+  }
 }
 
 .illustration-image {
@@ -135,10 +162,29 @@ view, text, image, button, input, textarea, navigator {
   gap: 24px; /* Tailwind: gap-6 */
 }
 
-/* 移动端大于480px时改为水平布局 */
-@media screen and (min-width: 480px) {
+/* 在小屏幕上尝试水平布局 */
+@media screen and (min-width: 375px) {
   .metrics-section {
     flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .radar-container {
+    /* flex: 1; */
+    min-width: 250px;
+  }
+
+  .about-card {
+    width: 280px;
+    flex-shrink: 0;
+  }
+}
+
+/* 移动端大于480px时优化水平布局 */
+@media screen and (min-width: 480px) {
+  .metrics-section {
+    flex-wrap: nowrap;
     align-items: stretch;
   }
 
@@ -148,7 +194,6 @@ view, text, image, button, input, textarea, navigator {
 
   .about-card {
     width: 300px;
-    flex-shrink: 0;
   }
 }
 
@@ -158,6 +203,12 @@ view, text, image, button, input, textarea, navigator {
   flex-direction: column;
   gap: 16px; /* Tailwind: gap-4 */
 }
+
+/* 雷达图组件容器 */
+/* .radar-chart-container {
+  max-width: 280px;
+  margin: 0 auto;
+} */
 
 .section-title {
   font-size: 18px; /* Tailwind: text-lg */
@@ -172,6 +223,9 @@ view, text, image, button, input, textarea, navigator {
   border-radius: 12px; /* --radius-lg */
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(161, 136, 127, 0.08); /* --shadow-lg */
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* 让卡片填满容器高度 */
 }
 
 .card-header {

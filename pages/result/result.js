@@ -26,7 +26,9 @@ Page({
       color: '#10b981',
       bgColor: '#d1fae5',
       textColor: '#3E2723',
-      icon: '12'
+      icon: '12',
+      style: 'secure',
+      illustrationImage: '/assets/images/resultSecure.png'
     },
 
     // 分数数据
@@ -193,7 +195,10 @@ Page({
         color: description.color,
         bgColor: description.bgColor,
         textColor: description.textColor,
-        icon: description.icon
+        icon: description.icon,
+        style: style,  // 添加依恋类型标识
+        // 根据依恋类型设置图片路径
+        illustrationImage: this.getIllustrationImage(style)
       };
 
       // 构建分数数据
@@ -261,6 +266,17 @@ Page({
       hasError: true,
       errorMessage: message || '加载结果失败，请稍后重试'
     });
+  },
+
+  // 获取依恋类型对应的插画图片
+  getIllustrationImage(style) {
+    const imageMap = {
+      anxious: '/assets/images/resultAnxious.png',
+      avoidant: '/assets/images/resultAvoidant.png',
+      disorganized: '/assets/images/resultDisorganized.png',
+      secure: '/assets/images/resultSecure.png'
+    };
+    return imageMap[style] || '/assets/images/resultSecure.png';
   },
 
   // 重试加载

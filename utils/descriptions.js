@@ -4,7 +4,7 @@
 // 依恋类型描述
 const ATTACHMENT_DESCRIPTIONS = {
   secure: {
-    title: '安全型依恋',
+    title: '安全型',
     percentage:'46%',
     labels:[
       '信任伴侣',
@@ -28,7 +28,7 @@ const ATTACHMENT_DESCRIPTIONS = {
   },
 
   anxious: {
-    title: '焦虑型依恋',
+    title: '焦虑型',
     percentage:'26%',
     labels:[
       '持续不安',
@@ -50,7 +50,7 @@ const ATTACHMENT_DESCRIPTIONS = {
   },
 
   avoidant: {
-    title: '回避型依恋',
+    title: '回避型',
     percentage:'20%',
     labels:[
       '避免冲突',
@@ -72,7 +72,7 @@ const ATTACHMENT_DESCRIPTIONS = {
   },
 
   disorganized: {
-    title: '恐惧型依恋',
+    title: '恐惧型',
     percentage:'10%',
     labels:[
       '若即若离',

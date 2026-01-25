@@ -12,27 +12,26 @@
     <view class="header-container">
       <!-- 左侧：标题和标签 -->
       <view class="header-left">
-        <text class="header-title">你的依恋类型为</text>
-        <text class="attachment-title">{{resultSummary.title}}</text>
+        <text class="header-title">你的依恋类型为：</text>
+        <text class="attachment-title attachment-title-{{resultSummary.style}}">{{resultSummary.title}}</text>
         <view class="tag-container">
           <view wx:for="{{resultSummary.labels}}" wx:key="index" class="tag">
             <text class="tag-text">#{{item}}</text>
           </view>
         </view>
-        <text class="attachment-title">约{{resultSummary.percentage}}人是该类型</text>
+        <text class="per-title">约<text class="percentage-bold percentage-bold-{{resultSummary.style}}">{{resultSummary.percentage}}</text>人是该类型</text>
       </view>
 
       <!-- 右侧：插画盒子 -->
       <view class="header-right">
         <view class="illustration-box">
-          <image src="/assets/images/xiaoba2.png" class="illustration-image" mode="aspectFit" />
+          <image src="{{resultSummary.illustrationImage}}" class="illustration-image" mode="aspectFit" />
         </view>
       </view>
     </view>
   </view>
 
   <view class="metrics-section">
-    <!-- todo有问题 -->
     <view class="radar-container">
       <text class="section-title">依恋维度分布</text>
       <radar-chart
@@ -40,7 +39,7 @@
         data="{{radarChartData}}"
         indicators="{{indicators}}"
         theme-color="#4680FF"
-        size-ratio="0.35"
+        size-ratio="0.25"
         area-opacity="0.4"
         show-score="{{true}}"
       ></radar-chart>
