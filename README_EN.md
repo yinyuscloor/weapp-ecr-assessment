@@ -6,7 +6,7 @@
 ![WeChat Mini Program](https://img.shields.io/badge/WeChat%20Mini%20Program-2.19.1+-07C160.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-**[中文](README.CN) | [English](README_EN.md)**
+**[中文](README.md) | [English](README_EN.md)**
 
 A WeChat Mini Program for ECR attachment style assessment, helping you understand your patterns in close relationships.
 
