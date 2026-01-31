@@ -37,7 +37,6 @@ view, text, image, button, input, textarea, navigator {
 .result-header {
   background-color: transparent;
   padding: 32px 16px 24px 16px; /* Tailwind: py-8 px-4 pb-6 */
-  border-bottom: 1px solid #e5e0db; /* --color-border-light */
 }
 
 .header-container {
@@ -156,64 +155,57 @@ view, text, image, button, input, textarea, navigator {
    ============================================ */
 
 .metrics-section {
-  padding: 24px 16px; /* Tailwind: py-6 px-4 */
-  display: flex;
+  padding: 0px 16px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  text-align: center;
+}
+
+.radar-container {
+  min-width: 100px;
+  max-width: 340px;
+  border: 1px solid #e5e0db;
+  border-radius: 12px; 
+  padding: 16px;
+  background-color: #ffffff;
   flex-direction: column;
-  gap: 24px; /* Tailwind: gap-6 */
 }
 
-/* 在小屏幕上尝试水平布局 */
-@media screen and (min-width: 375px) {
+.section-title {
+  font-size: 18px; /* 减小字体大小 */
+  color: #3c3c3c; /* --color-text-primary */
+}
+
+.about-card {
+  width: 280px;
+}
+
+/* 在小屏幕上改为垂直布局 */
+@media screen and (max-width: 480px) {
   .metrics-section {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
   }
-
-  .radar-container {
-    /* flex: 1; */
-    min-width: 250px;
-  }
-
+  
   .about-card {
-    width: 280px;
-    flex-shrink: 0;
+    width: 100%;
   }
 }
 
-/* 移动端大于480px时优化水平布局 */
+/* 移动端大于480px时优化布局 */
 @media screen and (min-width: 480px) {
-  .metrics-section {
-    flex-wrap: nowrap;
-    align-items: stretch;
-  }
-
-  .radar-container {
-    flex: 1;
-  }
-
   .about-card {
     width: 300px;
   }
 }
 
-/* 雷达图容器 */
-.radar-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px; /* Tailwind: gap-4 */
-}
+
 
 /* 雷达图组件容器 */
-/* .radar-chart-container {
-  max-width: 280px;
-  margin: 0 auto;
-} */
-
-.section-title {
-  font-size: 18px; /* Tailwind: text-lg */
-  color: #3c3c3c; /* --color-text-primary */
-  font-weight: 600; /* --font-weight-semibold */
+.radar-chart-container {
+  width: 100px;
+  max-width: 200px; /* 减小最大宽度，确保不覆盖边框 */
+  margin: 0 auto; /* 居中显示 */
 }
 
 
@@ -233,20 +225,14 @@ view, text, image, button, input, textarea, navigator {
   padding: 12px 16px; /* Tailwind: px-4 py-3 */
 }
 
-.card-title {
-  font-size: 16px; /* Tailwind: text-md */
-  color: #ffffff; /* 白色文字 */
-  font-weight: 600; /* --font-weight-semibold */
-}
-
 .card-content {
   padding: 16px; /* Tailwind: p-4 */
 }
 
 .card-text {
-  font-size: 14px; /* Tailwind: text-base */
-  color: #3c3c3c; /* --color-text-primary */
-  line-height: 1.6; /* --leading-relaxed */
+  font-size: 14px;
+  color: #3c3c3c; 
+  line-height: 1.6; 
 }
 
 /* ============================================
@@ -254,31 +240,40 @@ view, text, image, button, input, textarea, navigator {
    ============================================ */
 
 .data-section {
-  padding: 0 16px 24px 16px; /* Tailwind: px-4 pb-6 */
+  padding: 0 16px 24px 16px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .data-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px; /* Tailwind: gap-4 */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
-/* 移动端大于480px时改为三列 */
-@media screen and (min-width: 480px) {
+/* 在小屏幕上保持三列，但允许换行 */
+@media screen and (max-width: 480px) {
   .data-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    overflow-x: auto; /* 允许水平滚动 */
+  }
+  
+  .data-card {
+    min-width: 80px; /* 确保卡片有最小宽度 */
+    align-items: center;
   }
 }
 
 .data-card {
   background-color: transparent;
   border-radius: 12px; /* --radius-lg */
-  padding: 16px; /* Tailwind: p-4 */
-  box-shadow: 0 2px 8px rgba(161, 136, 127, 0.1); /* --shadow-md */
+  padding: 8px; /* 减小内边距 */
+  box-shadow: 0 2px 8px rgba(161, 136, 127, 0.1);
   border-top: 4px solid;
   display: flex;
   flex-direction: column;
-  gap: 8px; /* Tailwind: gap-2 */
+  gap: 8px; /* 减小间距 */
+  min-height: auto; /* 移除最小高度 */
 }
 
 /* 卡片类型特定样式 */
@@ -303,9 +298,8 @@ view, text, image, button, input, textarea, navigator {
 }
 
 .data-value {
-  font-size: 24px; /* Tailwind: text-2xl */
+  font-size: 16px; /* 减小字体大小 */
   color: #3c3c3c; /* --color-text-primary */
-  font-weight: 700; /* --font-weight-bold */
 }
 
 .data-icon {
@@ -324,30 +318,28 @@ view, text, image, button, input, textarea, navigator {
    ============================================ */
 
 .detail-section {
-  padding: 0 16px 24px 16px; /* Tailwind: px-4 pb-6 */
+  padding: 15px 18px 15px 18px; 
 }
 
 .detail-card {
   background-color: transparent;
-  border-radius: 12px; /* --radius-lg */
-  padding: 20px; /* Tailwind: p-5 */
-  box-shadow: 0 4px 16px rgba(161, 136, 127, 0.08); /* --shadow-lg */
-  border: 1px solid #e5e0db; /* --color-border-light */
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid #e5e0db;
 }
 
 .detail-title {
-  font-size: 18px; /* Tailwind: text-lg */
-  color: #3c3c3c; /* --color-text-primary */
-  font-weight: 600; /* --font-weight-semibold */
-  margin-bottom: 16px; /* Tailwind: mb-4 */
-  padding-bottom: 8px; /* Tailwind: pb-2 */
-  border-bottom: 2px solid #e5e0db; /* --color-border-light */
+  font-size: 18px; /* 减小字体大小 */
+  color: #000000; /* --color-text-primary */
+  font-weight: 700; /* 加粗字体 */
 }
 
 .detail-content {
+  margin-top: 4px;
   display: flex;
   flex-direction: column;
-  gap: 12px; /* Tailwind: gap-3 */
+  gap: 12px; 
+  text-align: justify; /* 两端对齐 */
 }
 
 .pattern-item {

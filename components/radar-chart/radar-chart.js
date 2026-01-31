@@ -226,14 +226,14 @@ Component({
           ctx.fill();
         }
         
-        // 绘制刻度值
-        if (i < gridCount) {
-          ctx.fillStyle = 'rgba(120, 120, 120, 0.7)';
-          ctx.font = `${this.properties.scoreFontSize}px ${this.properties.fontFamily}`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText((i * 20).toString(), centerX, centerY - r - 5);
-        }
+        // 移除刻度值显示
+        // if (i < gridCount) {
+        //   ctx.fillStyle = 'rgba(120, 120, 120, 0.7)';
+        //   ctx.font = `${this.properties.scoreFontSize}px ${this.properties.fontFamily}`;
+        //   ctx.textAlign = 'center';
+        //   ctx.textBaseline = 'middle';
+        //   ctx.fillText((i * 20).toString(), centerX, centerY - r - 5);
+        // }
       }
       
       // 绘制轴线

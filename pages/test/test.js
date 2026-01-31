@@ -415,7 +415,7 @@ Page({
     return {
       title: '我正在参加ECR依恋测试',
       path: '/pages/index/index',
-      imageUrl: '/assets/images/share-cover.svg'
+      imageUrl: '/assets/images/share.jpg',
     };
   },
 

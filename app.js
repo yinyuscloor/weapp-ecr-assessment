@@ -265,7 +265,8 @@ App({
   onShareTimeline() {
     return {
       title: 'ECR依恋型人格测试 - 了解你的依恋风格',
-      query: 'from=timeline'
+      query: 'from=timeline',
+      imageUrl: '/assets/images/share-cover.svg'
     };
   },
 

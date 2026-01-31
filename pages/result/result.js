@@ -393,9 +393,9 @@ Page({
     const { resultSummary, scores } = this.data;
 
     return {
-      title: `我的ECR依恋测试结果：${resultSummary.label}`,
-      path: '/pages/result/result',
-      imageUrl: '/assets/images/share-result.svg',
+      title: `我的ECR依恋测试结果：${resultSummary.title}`,
+      path: '/pages/index/index',
+      imageUrl: '/assets/images/share.jpg',
       success: () => {
         console.log('分享成功');
       },
@@ -412,7 +412,7 @@ Page({
     return {
       title: `ECR依恋测试 - ${resultSummary.title}`,
       query: 'from=timeline',
-      imageUrl: '/assets/images/share-timeline.svg'
+      imageUrl: '/assets/images/share.jpg',
     };
   },
 

@@ -123,7 +123,7 @@ const ATTACHMENT_ANIMALS = {
     metaphor: '像兔子一样，您对关系变化非常敏感，渴望安全感'
   },
   avoidant: {
-    animal: '猫咪',
+    animal: '猫',
     icon: '🐱',
     color: '#8b5cf6',
     description: '猫咪象征着独立性、自主性和选择性亲密',
@@ -140,10 +140,14 @@ const ATTACHMENT_ANIMALS = {
   }
 };
 
-// 雷达图计算函数
+// 雷达图计算函数 - 优化版本（方案3）
 const calculateRadarData = (anxietyScore, avoidanceScore) => {
-  const security = Math.max(0, Math.min(100, 100 - anxietyScore - avoidanceScore));
-  const fear = Math.max(0, Math.min(100, anxietyScore + avoidanceScore));
+  // 方案3：更符合ECR理论的逻辑
+  // 安全型：综合低分 (100 - 平均分)
+  const security = Math.max(0, Math.min(100, 100 - (anxietyScore * 0.5 + avoidanceScore * 0.5)));
+  
+  // 恐惧型：综合高分 (平均分)
+  const fear = Math.max(0, Math.min(100, (anxietyScore + avoidanceScore) / 2));
 
   return {
     security: Math.round(security),

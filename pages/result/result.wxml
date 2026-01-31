@@ -31,31 +31,6 @@
     </view>
   </view>
 
-  <view class="metrics-section">
-    <view class="radar-container">
-      <text class="section-title">依恋维度分布</text>
-      <radar-chart
-        id="radarChart"
-        data="{{radarChartData}}"
-        indicators="{{indicators}}"
-        theme-color="#4680FF"
-        size-ratio="0.25"
-        area-opacity="0.4"
-        show-score="{{true}}"
-      ></radar-chart>
-    </view>
-
-    <!-- 右侧："关于你"卡片 -->
-    <view class="about-card">
-      <view class="card-header">
-        <text class="card-title">关于你</text>
-      </view>
-      <view class="card-content">
-        <text class="card-text">{{resultSummary.summary}}</text>
-      </view>
-    </view>
-  </view>
-
   <!-- 数据区（Grid Layout，三列） -->
   <view class="data-section">
     <view class="data-grid">
@@ -63,22 +38,44 @@
       <view class="data-card animal-card">
         <text class="data-label">相似动物</text>
         <text class="data-value">{{animalData.animal}}</text>
-        <text class="data-icon">{{animalData.icon}}</text>
-        <text class="data-description">{{animalData.description}}</text>
+        <!-- <text class="data-description">{{animalData.description}}</text> -->
       </view>
 
       <!-- 高焦虑% -->
       <view class="data-card anxiety-card">
-        <text class="data-label">高焦虑%</text>
+        <text class="data-label">高焦虑</text>
         <text class="data-value">{{dataMetrics.highAnxiety}}%</text>
-        <text class="data-description">{{scores.anxiety.interpretation}}</text>
       </view>
 
       <!-- 高回避% -->
       <view class="data-card avoidance-card">
-        <text class="data-label">高回避%</text>
+        <text class="data-label">高回避</text>
         <text class="data-value">{{dataMetrics.highAvoidance}}%</text>
-        <text class="data-description">{{scores.avoidance.interpretation}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="metrics-section">
+    <view class="radar-container">
+      <text class="section-title">ECR指标</text>
+      <radar-chart
+        id="radarChart"
+        data="{{radarChartData}}"
+        indicators="{{indicators}}"
+        theme-color="#4680FF"
+        size-ratio="0.3"
+        area-opacity="0.2"
+        show-score="{{false}}"
+      ></radar-chart>
+    </view>
+  </view>
+
+  <!-- 右侧："关于你"卡片 -->
+  <view class="detail-section">
+    <view class="detail-card">
+      <text class="detail-title">关于你</text>
+      <view class="detail-content">
+        {{resultSummary.summary}}
       </view>
     </view>
   </view>
@@ -95,10 +92,7 @@
     </view>
   </view>
 
-  <!-- 底部操作区域 -->
-  <view class="action-section">
-    <button class="retake-btn" bindtap="retakeTest">重新测试</button>
-  </view>
+
 
   <!-- 加载状态 -->
   <view wx:if="{{isLoading}}" class="loading-container">

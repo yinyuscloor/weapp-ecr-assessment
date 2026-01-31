@@ -274,7 +274,7 @@ Page({
     return {
       title: 'ECR依恋型人格测试 - 了解你的亲密关系模式',
       path: '/pages/index/index',
-      imageUrl: '/assets/images/share-cover.svg'
+      imageUrl: '/assets/images/share.jpg'
     };
   },
 
@@ -282,7 +282,8 @@ Page({
   onShareTimeline() {
     return {
       title: 'ECR依恋测试 | 科学分析你的依恋风格',
-      query: 'from=timeline'
+      query: 'from=timeline',
+      imageUrl: '/assets/images/share.jpg',
     };
   },
 
